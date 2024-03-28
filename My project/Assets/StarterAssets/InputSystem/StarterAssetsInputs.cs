@@ -63,7 +63,7 @@ namespace StarterAssets
 
 		public void SprintInput(bool newSprintState)
 		{
-			sprint = newSprintState;
+		//	sprint = newSprintState;
 		}
 		
 		private void OnApplicationFocus(bool hasFocus)
