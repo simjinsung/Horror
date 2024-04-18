@@ -5,26 +5,25 @@ using UnityEngine.AI;
 
 public class PlayerFollwer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    public bool IsStun = false;
     void Update()
     {
         GetComponent<Animator>().SetBool("IsFoundPlayer", true);
         GetComponent<NavMeshAgent>().destination = PlayerManager.Player.transform.position;
+        transform.LookAt(PlayerManager.Player.transform.position);
+       if(IsStun == false) transform.Rotate(Vector3.up * 90);
+        GetComponent<NavMeshAgent>().isStopped = IsStun;
+ 
+        
     }
 
-    private void OnTriggerEnter(Collider other)
+   /* private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             StartCoroutine(AttackMotion());
         }
-    }
+    }*/
 
     IEnumerator AttackMotion()
     {
