@@ -5,11 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerConroller : MonoBehaviour
 {
-    public Image blindImg;
     private void Awake()
     {
         //raycasthit¿Ã∏ß.transform.gameObject
-        blindImg.color = new Color(0, 0, 0, 1);
     }
 
     //IEnumerator SetBlind()

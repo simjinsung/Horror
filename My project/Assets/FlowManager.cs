@@ -26,10 +26,6 @@ public class FlowManager : MonoBehaviour
     {
         while (true)
         {
-            if (player.transform.postion == goal)
-            {
-                yiled break;
-            }
             yield return null;
         }
     }
