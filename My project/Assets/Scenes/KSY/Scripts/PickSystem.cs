@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PickSystem : MonoBehaviour
 {
     public GameObject Player;
     public bool IsPicking = false;
-    public bool IsKeyE = false;
+    private bool IsKeyE = false;
+    private bool dontKey = false;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && IsPicking != true)
+        if (Input.GetKeyDown(KeyCode.E) && dontKey == false)
         {
-          StartCoroutine(GetkeyE());
+            IsKeyE = true;
+            StartCoroutine(DontKey(0.5f));
         }
        
      }
@@ -19,33 +22,37 @@ public class PickSystem : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (IsPicking == false)
+        {
             if (other.CompareTag("PickAble"))
             {
-                if(IsKeyE && IsPicking != true)
+                if (IsKeyE == true)
                 {
+                    IsKeyE = false;
                     IsPicking = true;
                     Debug.Log("잡는중");
                 }
             }
+
+        }
     }
 
-    IEnumerator Picking(Collider obj)
-    {
-        Debug.Log("잡는중");
-        IsPicking = true;
-        while (IsKeyE)
-        {
-            obj.transform.position = Player.transform.position;
-            yield return null;
-        }
-        IsPicking = false;
+    IEnumerator DontKey(float t) {
+        dontKey = true;
+        yield return new WaitForSeconds(t);
+        dontKey = false;
+        IsKeyE = false;
         yield return null;
     }
-    IEnumerator GetkeyE()
+
+    public void SetIsKeyE(bool b)
     {
-        IsKeyE = true;
-        yield return new WaitForSecondsRealtime(0.01f);
-        IsKeyE = false;
+        IsKeyE = b;
     }
+    public bool GetIsKeyE()
+    {
+        return IsKeyE;
+    }
+
 
 }
