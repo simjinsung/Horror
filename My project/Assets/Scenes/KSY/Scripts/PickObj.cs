@@ -2,15 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PickObj : MonoBehaviour
 {
     public PickSystem p;
     public GameObject Player;
-    private bool PlayerEN = false;
-    private int plag = 0;
-    private bool holdable = true;
+    public bool PlayerEN = false;
+    public int plag = 0;
+    public bool holdable = true;
     public bool Isholding = false;
     private void OnTriggerEnter(Collider other)
     {
@@ -21,16 +24,17 @@ public class PickObj : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (!other.transform.CompareTag("PickSystem"))
-        {
-            PlayerEN = false;
-        }
+            PlayerEN = false;   
     }
    
     void Update()
     {
+        var text = transform.GetChild(0);
+        if(PlayerEN == true && plag==0) text.gameObject.SetActive(true);
+        else if(PlayerEN == false || plag == 1) text.gameObject.SetActive(false);
         if (holdable && Isholding)
         {
+
             if (plag == 0 && PlayerEN)
             {
                
@@ -63,6 +67,7 @@ public class PickObj : MonoBehaviour
         yield return new WaitForSeconds(t);
         holdable = true;
         p.SetIsKeyE(false);
+        p.IsPicking = false;
         Isholding = false;
         plag = 0;
     }

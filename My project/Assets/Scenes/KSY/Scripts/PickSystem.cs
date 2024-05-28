@@ -31,6 +31,7 @@ public class PickSystem : MonoBehaviour
                     IsKeyE = false;
                     IsPicking = true;
                     Debug.Log("Àâ´ÂÁß");
+                    other.GetComponent<PickObj>().Isholding = true;
                 }
             }
 
